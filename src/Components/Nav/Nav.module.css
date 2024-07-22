@@ -1,0 +1,102 @@
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background:#9AD0C2;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000; 
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 15px 20px;
+}
+
+.logo {
+    font-size: 1.5em;
+    text-decoration: none;
+}
+.navCheck {
+    display: none;
+  }
+  
+.navIcon {
+    display: none;
+    cursor: pointer;
+  }
+.navIcon span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px;
+    background-color: #333;
+    transition: 0.4s;
+  }
+.navLinks {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.navLinks .welcome{
+    text-transform: uppercase;
+}
+
+.navLinks a {
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    transition: background-color ease-in-out .3s;
+}
+
+.navLinks a img {
+    width: 24px; 
+    height: 24px; 
+    margin-right: 8px; 
+}
+
+.navLinks a:hover {
+    background-color: #d4d4d4;
+    border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .navCheck{
+        position: absolute;
+        right: 10px;
+    }
+    .navIcon {
+      display: block;
+      position: absolute;
+      right:10px;
+    }
+  
+    .navCheck:checked ~ .navLinks {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .navLinks {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      padding: 10px 0;
+    }
+  
+    .navLinks a {
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+    }
+  }

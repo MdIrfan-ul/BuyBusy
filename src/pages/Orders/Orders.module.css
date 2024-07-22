@@ -1,0 +1,19 @@
+.ordersContainer h1{
+    text-align: center;
+}
+
+.orderTime{
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.orderTable{
+    border: none;
+    margin: 0 auto 4rem;
+    position: relative;
+    width: 50%;
+}
+
+.orderTable tr{
+    background-color: #d9d9d936;
+}

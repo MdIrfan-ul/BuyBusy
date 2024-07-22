@@ -1,0 +1,151 @@
+
+[
+    {
+      "id": 1,
+      "title": "Men's Casual Shirt",
+      "category": "mensFashion",
+      "price": 409,
+      "imageUrl": "https://m.media-amazon.com/images/I/71jtkd3vr0L._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Men's Formal Shoes",
+      "category": "mensFashion",
+      "price":1799 ,
+      "imageUrl": "https://m.media-amazon.com/images/I/61NgGzJO3HL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Men's Denim Jacket",
+      "category": "mensFashion",
+      "price": 990,
+      "imageUrl": "https://m.media-amazon.com/images/I/61G1ZLzdBeS._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Men's Leather Belt",
+      "category": "mensFashion",
+      "price": 499,
+      "imageUrl": "https://m.media-amazon.com/images/I/71PWQ1b8LHL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Men's Wrist Watch",
+      "category": "mensFashion",
+      "price": 799,
+      "imageUrl": "https://m.media-amazon.com/images/I/71EcGgX9miL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Women's Summer Dress",
+      "category": "womensFashion",
+      "price": 446,
+      "imageUrl": "https://m.media-amazon.com/images/I/71ofsmesvpL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 7,
+      "title": "Women's Handbag",
+      "category": "womensFashion",
+      "price": 1143,
+      "imageUrl": "https://m.media-amazon.com/images/I/91OwukD6O8L._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 8,
+      "title": "Women's High Heels",
+      "category": "womensFashion",
+      "price": 999,
+      "imageUrl": "https://m.media-amazon.com/images/I/519jRRBaTEL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 9,
+      "title": "Women's Sunglasses",
+      "category": "womensFashion",
+      "price": 499,
+      "imageUrl": "https://m.media-amazon.com/images/I/41Mv6iTnQ2L._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 10,
+      "title": "Women's Scarf",
+      "category": "womensFashion",
+      "price": 269,
+      "imageUrl": "https://m.media-amazon.com/images/I/91Os+G8FZmL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 11,
+      "title": "OnePlus 12R",
+      "category": "Electronics",
+      "price": 39998,
+      "imageUrl": "https://m.media-amazon.com/images/I/717JX3femML._AC_UY327_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 12,
+      "title": "Lenovo ThinkBook 15 G5",
+      "category": "Electronics",
+      "price": 37990,
+      "imageUrl": "https://m.media-amazon.com/images/I/51UoiQ-zvEL._AC_UY327_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 13,
+      "title": "SkullCandy Wireless Earbuds",
+      "category": "Electronics",
+      "price": 2997,
+      "imageUrl": "https://m.media-amazon.com/images/I/71qdSUWFOeL._AC_UY327_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 14,
+      "title": "FireBolt 4G Smartwatch",
+      "category": "Electronics",
+      "price": 2499,
+      "imageUrl": "https://m.media-amazon.com/images/I/71Tk5OPf9BL._AC_UY327_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 15,
+      "title": "Samsung Galaxy Tab A9",
+      "category": "Electronics",
+      "price": 20990,
+      "imageUrl": "https://m.media-amazon.com/images/I/61afkty1foL._AC_UY327_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 16,
+      "title": "22k (916)Gold Necklace",
+      "category": "Jewellery",
+      "price": 91876,
+      "imageUrl": "https://m.media-amazon.com/images/I/51PcXCt-m8L._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 17,
+      "title": "Friendly Diamonds Ring",
+      "category": "Jewellery",
+      "price": 143685,
+      "imageUrl": "https://m.media-amazon.com/images/I/61sRN2TQ7YL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 18,
+      "title": "Pearl Earrings",
+      "category": "Jewellery",
+      "price": 1471,
+      "imageUrl": "https://m.media-amazon.com/images/I/61QiFVjF3OL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 19,
+      "title": "Silver Bracelet",
+      "category": "Jewellery",
+      "price": 232,
+      "imageUrl": "https://m.media-amazon.com/images/I/61QXyxuQxxL._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 20,
+      "title": "Ruby Necklace",
+      "category": "Jewellery",
+      "price": 699,
+      "imageUrl": "https://m.media-amazon.com/images/I/71p9Zoiy74L._AC_UL480_FMwebp_QL65_.jpg"
+    },
+    {
+      "id": 21,
+      "title": "Emerald Ring",
+      "category": "Jewellery",
+      "price": 469,
+      "imageUrl": "https://m.media-amazon.com/images/I/61TxcNBtOsL._AC_UL480_FMwebp_QL65_.jpg"
+    }
+  ]
+  
