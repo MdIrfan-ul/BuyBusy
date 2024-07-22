@@ -10,7 +10,7 @@ ___
 
 ## Live
 
-Live Link:- <a href="" target=_blank>Buy Busy</a>
+Live Link:- <a href="https://shopbusy.netlify.app/" target=_blank>Buy Busy</a>
 
 ___
 
