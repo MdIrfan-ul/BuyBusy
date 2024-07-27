@@ -1,133 +1,69 @@
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import style from "./Cart.module.css";
 import remove from "../../static/images/remove.png";
 import add from "../../static/images/add.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth.context";
-import { Bounce, Slide, toast } from "react-toastify";
-import { useProducts } from "../../context/product.context";
+import {  toast } from "react-toastify";
 import { FaShoppingCart } from "react-icons/fa";
+import { addToCart, fetchCartItems, removeFromCart } from "../../redux/reducers/cartReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { addOrders } from "../../redux/reducers/orderReducer";
 
 function Cart() {
-  const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const { user } = useAuth();
-  const { fetchCartItems, calculateTotalPrice, removeFromCart, addOrders } =
-    useProducts();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const hasShownToastRef = useRef(false);
+  const cartItems = useSelector((state) => state.carts.items); // Ensure this matches your slice state
+  const { user } = useSelector((state) => state.auth);
+  
 
-  // Getting Cart Items
   useEffect(() => {
-    const loadCartItems = async () => {
-      if (user) {
-        const items = await fetchCartItems(user);
-        setCartItems(items);
-        if (items.length === 0 && !hasShownToastRef.current) {
-          toast.info("No products in cart.", {
-            pauseOnHover: false,
-            transition: Bounce,
-          });
-          hasShownToastRef.current = true;
-        }
-      }
-    };
+    if (user && user.uid) {
+      dispatch(fetchCartItems(user.uid));
+    }
+  }, [user, dispatch]);
 
-    loadCartItems();
-  }, [user, fetchCartItems]);
 
-  // Calculating Total Price 
-  useEffect(() => {
-    const newTotalPrice = calculateTotalPrice(cartItems);
-    setTotalPrice(newTotalPrice);
-  }, [cartItems, calculateTotalPrice]);
 
-  // Increase Quantity
   const handleIncrement = (id) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+    const item = cartItems.find((item) => item.id === id);
+    if (item) {
+      dispatch(addToCart({ user, product: { ...item, quantity: item.quantity + 1 } }));
+    }
   };
-// Decrease Quantity
+
   const handleDecrement = (id) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
-          : item
-      )
-    );
-  };
-// Removing Cart
-  const handleRemoveFromCart = async (id) => {
-    if (!user || !user.uid) {
-      toast.error("User is not authenticated.");
-      return;
-    }
-    const itemId = String(id);
-
-    try {
-      console.log(`Attempting to delete document at path: userCarts/${user.uid}/myCart/${itemId}`);
-      const { success, message } = await removeFromCart(user, id);
-      setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-      if (success) {
-        toast.success(message, {
-          pauseOnHover: false,
-          closeOnClick: true,
-          transition: Slide,
-        });
+    const item = cartItems.find((item) => item.id === id);
+    if (item) {
+      if (item.quantity > 1) {
+        dispatch(addToCart({ user, product: { ...item, quantity: item.quantity - 1 } }));
       } else {
-        toast.error(message, {
-          pauseOnHover: false,
-          closeOnClick: true,
-          transition: Slide,
-        });
+        handleRemoveFromCart(id);
       }
-    } catch (error) {
-      console.error("Error removing item from cart:", error.message);
-      toast.error("something went wrong");
     }
   };
-// Order from Cart
-  const handleOrderNow = async () => {
-    if (cartItems.length === 0) {
-      toast.error("No items in cart to order.", {
-        closeOnClick: true,
-        pauseOnHover: false,
-      });
-      return;
+  
+  
+
+  const handleRemoveFromCart = (id) => {
+    if (user && id) {
+      dispatch(removeFromCart({ user, productId: id }));
+    } else {
+      toast.error("Unable to remove item from cart.");
     }
+  };
+  const handleOrderNow = () => {
 
     if (!user || !user.uid) {
       toast.error("User is not authenticated.");
       return;
     }
-
-    try {
-      const { success, message } = await addOrders(user, cartItems);
-      setCartItems([]);
-      setTotalPrice(0);
-      if (success) {
-        toast.success(message, {
-          pauseOnHover: false,
-          closeOnClick: true,
-          transition: Slide,
-        });
-      } else {
-        toast.error(message, {
-          pauseOnHover: false,
-          closeOnClick: true,
-          transition: Slide,
-        });
-      }
-      navigate("/myorders");
-    } catch (error) {
-      console.error("Error placing order: ", error);
-      toast.error("Failed to place order.");
-    }
+   try {
+    dispatch(addOrders({user,cartItems}));
+    navigate("/myorders");
+   } catch (error) {
+    console.log(error);
+   }
   };
 
   return (
@@ -135,7 +71,7 @@ function Cart() {
       <h2 className={style.welcome}>WELCOME, {user.displayName}</h2>
       <div className={style.cartPageContainer}>
         <aside className={style.totalPrice}>
-          <p>Total:&#8377;{totalPrice}</p>
+          <p>Total:&#8377;{cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</p>
           <Link to="/myorders">
             <button className={style.purchaseBtn} onClick={handleOrderNow}>
              <FaShoppingCart/> Order Now

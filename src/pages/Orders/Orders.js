@@ -1,38 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect} from "react";
 import style from "./Orders.module.css";
-import { useAuth } from "../../context/auth.context";
-import { toast, Zoom } from "react-toastify";
-import { useProducts } from "../../context/product.context";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrders } from "../../redux/reducers/orderReducer";
+
 function Orders() {
-  const [orders, setOrders] = useState([]);
-  const { user } = useAuth();
-  const hasShownToastRef = useRef(false);
-  const {getOrders} = useProducts();
+ 
+ const {user} = useSelector(state=>state.auth);
+ const {orders} = useSelector(state=>state.orders);
+
+  const dispatch = useDispatch();
+
+
 
   // Getting orders from db
   useEffect(() => {
-    const fetchOrders = async () => {
-      if (user && user.uid) {
-        try {
-          const ordersData = await getOrders(user);
-          setOrders(ordersData);
-
-          if (ordersData.length === 0 && !hasShownToastRef.current) {
-            toast.info("No orders found.", {
-              pauseOnHover: false,
-              transition: Zoom,
-            });
-            hasShownToastRef.current = true;
-          }
-        } catch (error) {
-          console.error("Error fetching orders: ", error);
-          toast.error("Failed to fetch orders.");
-        }
-      }
-    };
-
-    fetchOrders();
-  }, [user, getOrders]);
+    console.log('Fetching orders for user:', user); // Debugging
+    if (user && user.uid) {
+      dispatch(getOrders(user.uid));
+    }
+  }, [user,dispatch ]);
+  
 
   return (
     <>

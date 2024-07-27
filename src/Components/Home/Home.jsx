@@ -3,31 +3,29 @@
 import style from "./Home.module.css";
 import { useEffect, useState } from "react";
 
-import { useAuth } from "../../context/auth.context";
-import { Slide, toast, Zoom } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FcBusinessman, FcBusinesswoman, FcElectronics } from "react-icons/fc";
 import { GiGemChain } from "react-icons/gi";
-import { useProducts } from "../../context/product.context";
+
 import LoadingSpinner from "../../pages/Spinner/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts, setLoadingProductId } from "../../redux/reducers/ProductReducer";
+import { toast } from "react-toastify";
+import { addToCart } from "../../redux/reducers/cartReducer";
 
 function Home() {
-  const { products, getAllProducts, addToCart, loadingProductId, isLoading } =
-    useProducts();
+  const { products, loading, loadingProductId } = useSelector((state) => state.products);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceRange, setPriceRange] = useState(100000);
-  const { user } = useAuth();
+  const dispatch = useDispatch();
+  const {user} = useSelector(state=>state.auth);
   const navigate = useNavigate();
-  const [isFetched, setIsFetched] = useState(false); // Flag to check if products are fetched
 
-  // Getting products from db
   useEffect(() => {
-    if (!isFetched) {
-      getAllProducts();
-      setIsFetched(true);
-    }
-  }, [isFetched, getAllProducts]);
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
 
   // setting search query
   const handleSearchChange = (e) => {
@@ -51,25 +49,27 @@ function Home() {
 
   // Adding Product to Cart
   const handleAddToCart = async (product) => {
-    // console.log('Product:', product);
-    // console.log("user:",user)
+    console.log('Product:', product);
+    console.log('User:', user);
+    console.log('PRODUCT ID:', product.id);
+    console.log('Product Quantity:', product.quantity);
+  
+    if (!user) {
+      toast.error("🔒 Please sign in to add items to your cart.");
+      navigate("/signin");
+      return;
+    }
     try {
-      if (!user) {
-        toast.error("🔒Please sign in to add items to your cart.");
-        navigate("/signin");
-        return;
-      }
-      const { success, message } = await addToCart(user, product);
-      if (success) {
-        toast.success(message, { pauseOnHover: false, transition: Zoom });
-      } else {
-        toast.error(message, { pauseOnHover: false, transition: Slide });
-        if (message.includes("Please Login to Continue")) {
-          navigate("/signin");
-        }
+      dispatch(setLoadingProductId(product.id));
+      const resultAction = await dispatch(addToCart({ user, product }));
+      if (addToCart.rejected.match(resultAction)) {
+        throw new Error(resultAction.payload);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error adding item to cart:", error.message);
+      toast.error(`Error adding item to cart: ${error.message}`);
+    } finally {
+      dispatch(setLoadingProductId(null));
     }
   };
   // Filter Products based on search, categories and prices
@@ -172,7 +172,7 @@ function Home() {
       </div>
       {/* Product */}
       <div className={style.productGridContainer}>
-        {isLoading && <LoadingSpinner />}
+        {loading && <LoadingSpinner />}
         {filteredProducts.map((product) => (
           <div className={style.productContainer} key={product.id}>
             <div className={style.productImageContainer}>
