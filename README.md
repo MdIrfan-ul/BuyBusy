@@ -27,10 +27,10 @@ ___
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=git,html,css,js,react,firebase" />
+    <img src="https://skillicons.dev/icons?i=git,html,css,js,react,redux,firebase" />
   </a>
 </p>
-- **Frontend**: React, CSS Modules, Toastify, Spinner-Material, React Router
+- **Frontend**: React, CSS Modules, Toastify, Spinner-Material, React Router,Redux Toolkit
 - **Backend**: Firebase Cloud Firestore, Firebase Authentication
 
 ___
@@ -81,9 +81,9 @@ ___
 - Add a web app to your Firebase project.
 - Copy the Firebase configuration and add it to your `.env` file.
 
-## Firebase Authentication
-- Enable Email/Password authentication in the Firebase Console under Authentication > Sign-in method.
-- Use the  `AuthContext` and `useAuth` hook to manage user authentication in your application.
+## Redux Toolkit Configuration
+
+Use Redux Toolkit for global state management, including handling product data, cart state,orders and user authentication.
 ___
 
 Developed with ❤️ by [Mohamed Irfanullah M]

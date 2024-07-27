@@ -4,25 +4,22 @@ import Signin from "../../static/images/login.png";
 import Cart from "../../static/images/cart.png";
 import MyOrders from "../../static/images/orders.png";
 import logOut from "../../static/images/logout.png";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import {  useAuth } from "../../context/auth.context";
-import { Slide, toast } from "react-toastify";
+import { NavLink, Outlet} from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/reducers/AuthReducer";
+
 
 function NavBar() {
-  const { user, handleSignOut } = useAuth();
-  const navigate = useNavigate();
+  
 
-  const signedUp = localStorage.getItem('isSignedUp');
+  const dispatch = useDispatch();
+  const{ user,isSignedUp} = useSelector((state) => state.auth);
 
-  const handleLogout = async () => {
-    try {
-      await handleSignOut();
-      toast.success('👋 LoggedOut Successfully',{pauseOnHover:false,transition:Slide});
-      navigate("/signin");
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
+  const handleLogout = () => {
+    dispatch(logout());
   };
+ 
   return (
     <>
       <nav className={style.navbar}>
@@ -44,7 +41,7 @@ function NavBar() {
               Home
             </li>
           </NavLink>
-          {user &&!signedUp? (
+          {user  && !isSignedUp?(
             <>
               <NavLink to="/myorders">
                 <li>

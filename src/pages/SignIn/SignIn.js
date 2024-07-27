@@ -1,49 +1,30 @@
 import { useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth.context";
+
 import style from "./SignIn.module.css";
-import { Flip, Slide, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { signin } from "../../redux/reducers/AuthReducer";
 
 function SignIn() {
   const emailInput = useRef();
   const passwordInput = useRef();
   const navigate = useNavigate();
-  const { handleSignIn, user} = useAuth();
-  const isSignedUp = localStorage.getItem('isSignedUp') === 'true';
+  const {user, status} = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  // Navigating user to home page after signin
   useEffect(() => {
-    if (user &&!isSignedUp) {
+    if (user &&status==="signin sucess" ) {
       navigate("/");
     }
-  }, [user, navigate, isSignedUp]);
+  }, [user,status, navigate]);
 
-  const clearInput = () => {
-    emailInput.current.value = "";
-    passwordInput.current.value = "";
-  };
-
-  // SignIn
   const signInForm = async (e) => {
     e.preventDefault();
     const email = emailInput.current.value;
     const password = passwordInput.current.value;
-    try {
-      const { success, message } = await handleSignIn(email, password);
-      if (success) {
-        toast.success(message,{pauseOnHover:false,transition:Flip});
-        navigate('/');
-      }
-       else {
-        toast.error(message,{pauseOnHover:false,transition:Slide});
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("An error occurred during sign in.",{pauseOnHover:false,transition:Slide});
-    } finally {
-      clearInput();
-    }
+    await dispatch(signin({ email, password }));
   };
+
 
   return (
     <div className={style.container}>
